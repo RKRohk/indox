@@ -9,3 +9,7 @@ package com.rorosa.indox
 fun UploadFile.toDBFile(): DBFile {
     return DBFile(id = null,fileName = file.originalFilename ?: file.name ,file = file.bytes)
 }
+
+fun UploadFile.toElasticFile(): ElasticFile {
+    return ElasticFile(fileName = file.originalFilename ?: file.name, file = file.bytes)
+}
