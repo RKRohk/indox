@@ -1,7 +1,6 @@
 package com.rorosa.indox
 
 import org.elasticsearch.client.create
-import org.elasticsearch.client.indexRepository
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
@@ -10,5 +9,3 @@ import org.springframework.stereotype.Repository
 interface DBFileRepository: CrudRepository<DBFile,Long>
 
 val restHighLevelClient = create()
-
-val esFileRepository = restHighLevelClient.indexRepository<ElasticFile>("documents")
