@@ -13,7 +13,7 @@ fun UploadFile.toDBFile(): DBFile {
 }
 
 fun UploadFile.toElasticFile(): ElasticFile {
-    return ElasticFile(fileName = file.originalFilename ?: file.name, data = file.bytes.toBase64())
+    return ElasticFile(fileName = file.originalFilename ?: file.name, data = file.bytes.toBase64(),attachment = null)
 }
 
 fun ByteArray.toBase64(): String = Base64.getEncoder().encodeToString(this)

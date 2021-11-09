@@ -1,9 +1,14 @@
 package com.rorosa.indox
 
 import com.fasterxml.jackson.core.util.ByteArrayBuilder
+import com.jillesvangurp.eskotlinwrapper.dsl.match
+import com.jillesvangurp.eskotlinwrapper.dsl.queryString
+import org.elasticsearch.action.search.configure
 import org.elasticsearch.client.RequestOptions
+import org.elasticsearch.search.SearchHit
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import javax.websocket.server.PathParam
 
 
 data class UploadFile(val file: MultipartFile)
@@ -36,6 +41,17 @@ class UploadController(
         return dbFileRepository.findById(id).map {
             it.file
         }.orElse(null)
+    }
+
+    @GetMapping("/search")
+    fun search(@PathParam("searchTerm") searchTerm: String): List<ElasticFile> {
+        val searchResult = esFileRepository.search {
+            configure {
+                query = match( "attachment.content", query = searchTerm)
+            }
+        }
+
+        return searchResult.hits.map { it.second }.toList()
     }
 
     @DeleteMapping
