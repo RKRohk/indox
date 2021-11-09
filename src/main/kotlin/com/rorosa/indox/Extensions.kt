@@ -1,5 +1,7 @@
 package com.rorosa.indox
 
+import java.util.*
+
 /**
  * Extension function to convert Data Class UploadFile to DBFile
  * so that it can be stored in SQL
@@ -11,5 +13,7 @@ fun UploadFile.toDBFile(): DBFile {
 }
 
 fun UploadFile.toElasticFile(): ElasticFile {
-    return ElasticFile(fileName = file.originalFilename ?: file.name, file = file.bytes)
+    return ElasticFile(fileName = file.originalFilename ?: file.name, data = file.bytes.toBase64())
 }
+
+fun ByteArray.toBase64(): String = Base64.getEncoder().encodeToString(this)
